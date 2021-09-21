@@ -1,10 +1,12 @@
+from ..data_source.data_source import DataSource
+
 class Classifier:
-    def __init__(self, name, model, data_source):
+    def __init__(self, name: str, model, data_source: DataSource):
         self._name = name
         self._model = model
         self._data_source = data_source
 
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     def model(self):
@@ -17,4 +19,7 @@ class Classifier:
         raise RuntimeError("Not implemented")
 
     def checkpoint(self):
+        raise RuntimeError("Not implemented")
+
+    def refresh(self):
         raise RuntimeError("Not implemented")
