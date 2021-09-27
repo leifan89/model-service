@@ -1,11 +1,17 @@
-import os
+import atexit
+import yaml
 from flask import Flask
 
 from .model_service import ModelService
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    model_service = ModelService.init()
+    with open('model-service/config.yml', 'r') as f:
+        config = yaml.load(f, Loader=yaml.Loader)
+
+    print(config)
+
+    model_service = ModelService.init(config)
 
     from sklearn.datasets import load_iris
     from sklearn.model_selection import train_test_split
@@ -33,5 +39,7 @@ def create_app(test_config=None):
     def shutdown():
         model_service.shutdown()
         return "shutdown"
+
+    atexit.register(shutdown)
 
     return app

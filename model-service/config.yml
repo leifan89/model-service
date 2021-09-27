@@ -1,0 +1,14 @@
+models:
+  - name: category
+    type: TreeClassifier
+    data_source:
+      type: db
+      name: category
+      url: 127.0.0.1 
+      port: 5432
+      database: mydb
+      user: leifan
+      password: 12345
+      query:
+        features: SELECT name FROM category
+        target: SELECT category FROM category

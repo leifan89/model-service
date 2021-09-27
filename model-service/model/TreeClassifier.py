@@ -14,3 +14,7 @@ class TreeClassifier(Classifier):
             "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
             "min_samples_split": [2, 3, 4]
         }
+
+    def shutdown(self):
+        if self._data_source is not None:
+            self._data_source.shutdown()

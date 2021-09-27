@@ -1,2 +1,6 @@
 Flask
+json
 mypy
+psycopg2
+pyyaml
+scikit-learn

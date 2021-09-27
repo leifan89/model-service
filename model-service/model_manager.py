@@ -24,4 +24,7 @@ class ModelManager:
             return self.models[name].classify(X)
         else:
             raise RuntimeError(f"Model {name} is not found")
-        
+
+    def shutdown(self) -> None:
+        for model in self.models.values():
+            model.shutdown()
