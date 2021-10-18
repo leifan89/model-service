@@ -1,13 +1,16 @@
-import psycopg2
 from typing import Any
 from typing import Dict
 
+import pandas as pd
+import psycopg2
+
 from .data_source import DataSource
+
 
 class DBSource(DataSource):
     def __init__(self, name: str, config: Dict[str, Any]):
         super().__init__(name)
-        
+
         try:
             url = config['url']
             port = config['port']
@@ -22,7 +25,6 @@ class DBSource(DataSource):
                 user=user,
                 password=password
             )
-            self.cursor = self.connection.cursor()
 
             self.features_query = config['query']['features']
             self.target_query = config['query']['target']
@@ -30,16 +32,19 @@ class DBSource(DataSource):
             print(f"Failed to create a new DB connection: {ke}")
 
     def fetch_features(self) -> Any:
-        self.cursor.execute(self.features_query)
-        return self.cursor.fetchall()
+        with self.connection.cursor() as cursor:
+            cursor.execute(self.features_query)
+            column_names = [desc[0] for desc in cursor.description]
+            tuples = cursor.fetchall()
+            return pd.DataFrame(tuples, columns=column_names)
 
     def fetch_target(self) -> Any:
-        self.cursor.execute(self.target_query)
-        return self.cursor.fetchall()
+        with self.connection.cursor() as cursor:
+            cursor.execute(self.target_query)
+            tuples = cursor.fetchall()
+            return [t[0] for t in tuples]
 
     def shutdown(self) -> None:
         print(f"Shutting down {self.name()} DB source")
-        if self.cursor is not None:
-            self.cursor.close()
         if self.connection is not None:
             self.connection.close()

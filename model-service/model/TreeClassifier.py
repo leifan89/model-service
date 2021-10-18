@@ -1,9 +1,11 @@
-from sklearn.tree import DecisionTreeClassifier
 from typing import Any
 from typing import Dict
 
+from sklearn.tree import DecisionTreeClassifier
+
 from .classifier import Classifier
 from ..data_source.data_source import DataSource
+
 
 class TreeClassifier(Classifier):
     def __init__(self, name: str, data_source: DataSource):

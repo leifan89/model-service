@@ -1,13 +1,14 @@
 from __future__ import annotations
+
 import traceback
 from typing import Any
 from typing import Dict
 
-from .model.classifier import Classifier
+from .data_source.db_source import DBSource
 from .model.TreeClassifier import TreeClassifier
+from .model.classifier import Classifier
 from .model_manager import ModelManager
 
-from .data_source.db_source import DBSource
 
 class ModelService:
     @classmethod
@@ -35,7 +36,7 @@ class ModelService:
                 return cls({
                     name: model
                 })
-        
+
         except:
             traceback.print_exc()
 
@@ -47,6 +48,9 @@ class ModelService:
 
     def classify_with_model(self, name: str, X) -> Any:
         return self.model_manager.classify_with_model(name, X)
+
+    def refresh_model(self, name: str) -> None:
+        self.model_manager.refresh_model(name)
 
     def shutdown(self) -> None:
         print("shutting down model service")

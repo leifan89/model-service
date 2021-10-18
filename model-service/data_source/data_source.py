@@ -1,6 +1,7 @@
 from typing import Any
 from typing import Tuple
 
+
 class DataSource:
     def __init__(self, name: str):
         self._name = name

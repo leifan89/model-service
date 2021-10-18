@@ -3,6 +3,7 @@ from typing import Dict
 
 from .model.classifier import Classifier
 
+
 class ModelManager:
     def __init__(self, models: Dict[str, Classifier]):
         self.models = models
@@ -22,6 +23,12 @@ class ModelManager:
     def classify_with_model(self, name: str, X) -> Any:
         if name in self.models:
             return self.models[name].classify(X)
+        else:
+            raise RuntimeError(f"Model {name} is not found")
+
+    def refresh_model(self, name: str) -> None:
+        if name in self.models:
+            self.models[name].refresh()
         else:
             raise RuntimeError(f"Model {name} is not found")
 
