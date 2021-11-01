@@ -1,6 +1,4 @@
-Flask
-json
-mypy
-psycopg2
-pyyaml
-scikit-learn
+Flask >= 2.0.0
+mypy >= 0.910
+psycopg2 >= 2.9.0
+pyyaml >= 5.4.0

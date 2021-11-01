@@ -4,11 +4,11 @@ models:
     data_source:
       type: db
       name: category
-      url: 127.0.0.1
+      url: db
       port: 5432
       database: mydb
-      user: leifan
-      password: 12345
+      user: postgres
+      password: postgres
       query:
         features: SELECT name, location FROM category
         target: SELECT category FROM category
